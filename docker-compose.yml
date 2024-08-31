@@ -1,0 +1,42 @@
+name: poc-nats
+
+services:
+  published:
+    build: 
+      context: ./published
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - NATS_URL=nats://nats:4222
+      - ORDER_QUEUE=order.block
+    depends_on:
+      - nats
+
+  consumer:
+    build: 
+     context: ./consumer
+    ports:
+      - "8001:8001"
+    volumes:
+      - .:/app
+    environment:
+      - NATS_URL=nats://nats:4222
+      - ORDER_QUEUE=order.block
+    depends_on:
+      - nats
+
+  nats:
+    image: nats
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    environment:
+      - NATS_SERVER_NAME=nats-server
+      - NATS_USER=user
+      - NATS_PASSWORD=password
+
+networks:
+  poc-nats:
+    driver: bridge
