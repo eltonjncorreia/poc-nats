@@ -15,6 +15,7 @@ func main() {
 	queue := os.Getenv("ORDER_QUEUE")
 
 	natsURL := flag.String("nats_url", natsConnectionString, "URL connection string to Nats")
+	flag.Parse()
 
 	fmt.Println("Nats publishe connection: ", *natsURL)
 

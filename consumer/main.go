@@ -16,6 +16,8 @@ func main() {
 
 	natsURL := flag.String("nats_url", natsConnectionString, "URL connection string to Nats")
 
+	flag.Parse()
+
 	fmt.Println("Nats consumer connection ", *natsURL)
 
 	nc, err := nats.Connect(*natsURL)
